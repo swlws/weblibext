@@ -7,10 +7,16 @@
     <title>Time</title>
   </head>
   <body>
+    <h3>模块-weblibext</h3>
+
+    <pre id="pre"></pre>
+
     <script src="../dist//weblibext.umd.js"></script>
     <script>
-      console.log(weblibext);
-      weblibext.a();
+      let el = document.getElementById("pre");
+      el.innerHTML = JSON.stringify(weblibext, undefined, 2);
+
+      console.info(weblibext);
     </script>
   </body>
 </html>

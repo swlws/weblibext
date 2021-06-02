@@ -1,7 +1,7 @@
 {
   "name": "weblibext",
   "version": "1.0.2",
-  "description": "",
+  "description": "web code snippets",
   "main": "dist/weblibext.cjs.js",
   "module": "dist/weblibext.umd.js",
   "types": "typings/index.d.ts",
@@ -14,8 +14,13 @@
     "lib",
     "tool"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "swlws",
+  "license": "MIT",
+  "homepage": "https://github.com/swlws/weblibext",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swlws/weblibext"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
