@@ -1,3 +1,5 @@
+import { Emitter } from "mitt";
+
 type CustomEmitter = Emitter & {
   once<T = any>(type: EventType, handler: Handler<T>): void;
   once(type: "*", handler: WildcardHandler): void;
