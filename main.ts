@@ -1,6 +1,6 @@
-export * as DomUtil from "./src/DomUtil";
-export * as TimeUtil from "./src/TimeUtil";
-export * as Tool from "./src/Tool";
-export * as EventBus from "./src/EventBus";
-export * as StringUtil from "./src/StringUtil";
-export * as RegUtil from "./src/RegUtil";
+export * as dom from "./src/dom";
+export * as string from "./src/string";
+export * as reg from "./src/reg";
+export * as time from "./src/time";
+export * as lib from "./src/lib";
+export * as event from "./src/event-bus";

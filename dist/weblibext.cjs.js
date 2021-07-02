@@ -10,114 +10,6 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var base64__default = /*#__PURE__*/_interopDefaultLegacy(base64);
 var mitt__default = /*#__PURE__*/_interopDefaultLegacy(mitt);
 
-/**
- * 随机字符串
- */
-
-function makeRandom() {
-  return (Math.random() / +new Date()).toString(36).replace(/\d/g, "").slice(1);
-}
-/**
- * 字符串转小驼峰
- * @param {String} str --a-_b--- => aBC
- */
-
-function camelCase(str) {
-  if (!str) return ""; // 去除收尾的空格、横线、下划线
-
-  var tmp = str.replace(/^[_\-\s]*|[_\-\s]*$/g, "");
-  return tmp.replace(/[-_\s]+(\w)/g, function (substr, $1) {
-    return $1.toUpperCase();
-  });
-}
-/**
- * 字符串首字母大写
- */
-
-function upperFirst(str) {
-  if (!str.trim()) return "";
-  return str.trim().replace(/^\w/, function ($1) {
-    return $1.toUpperCase();
-  });
-}
-/**
- * rgb转hex
- *
- * @param color
- * @returns
- */
-
-function rgbToHex(color) {
-  var values = color.replace(/(rgba?|[()]+|\s+)/g, "").split(",");
-  var r = parseInt(values[0]) || 0;
-  var g = parseInt(values[1]) || 0;
-  var b = parseInt(values[2]) || 0;
-  return ((r << 16) + (g << 8) + b).toString(16).padStart(6, "0");
-}
-/**
- * hex转rgba
- * @param {String} color
- * @param {Float} alp
- */
-
-function hexToRgba(color, alp) {
-  var tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
-  if (!tmp) return "";
-  var r = parseInt(tmp[1], 16);
-  var g = parseInt(tmp[2], 16);
-  var b = parseInt(tmp[3], 16);
-  var a = alp;
-  return "rgba(".concat(r, ",").concat(g, ",").concat(b, ",").concat(a, ")");
-}
-/**
- * rgba转rgb
- * @param {String} color
- */
-
-function rgbaToRgb(color) {
-  var values = color.replace(/(rgba?|[()]+|\s+)/g, "").split(",");
-  var a = parseFloat(values[3]) || 1;
-  var r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255);
-  var g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255);
-  var b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255);
-  var rr = "0" + r.toString(16).slice(-2);
-  var gg = "0" + g.toString(16).slice(-2);
-  var bb = "0" + b.toString(16).slice(-2);
-  return "#".concat(rr).concat(gg).concat(bb);
-}
-/**
- * base64编码，兼容中文
- *
- * @param str
- * @returns
- */
-
-function encode(str) {
-  return base64__default['default'].btoa(window.encodeURIComponent(str));
-}
-/**
- * base64解码，兼容中文
- *
- * @param str
- * @returns
- */
-
-function decode(str) {
-  return window.decodeURIComponent(base64__default['default'].atob(str));
-}
-
-var StringUtil = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    makeRandom: makeRandom,
-    camelCase: camelCase,
-    upperFirst: upperFirst,
-    rgbToHex: rgbToHex,
-    hexToRgba: hexToRgba,
-    rgbaToRgb: rgbaToRgb,
-    encode: encode,
-    decode: decode
-});
-
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
 
@@ -256,6 +148,154 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+/**
+ * 随机字符串
+ */
+
+function makeRandom() {
+  return (Math.random() / +new Date()).toString(36).replace(/\d/g, "").slice(1);
+}
+/**
+ * 字符串转小驼峰
+ * @param {String} str --a-_b--- => aBC
+ */
+
+function camelCase(str) {
+  if (!str) return ""; // 去除收尾的空格、横线、下划线
+
+  var tmp = str.replace(/^[_\-\s]*|[_\-\s]*$/g, "");
+  return tmp.replace(/[-_\s]+(\w)/g, function (substr, $1) {
+    return $1.toUpperCase();
+  });
+}
+/**
+ * 字符串首字母大写
+ */
+
+function upperFirst(str) {
+  if (!str.trim()) return "";
+  return str.trim().replace(/^\w/, function ($1) {
+    return $1.toUpperCase();
+  });
+}
+/**
+ * rgb转hex
+ *
+ * @param color
+ * @returns
+ */
+
+function rgbToHex(color) {
+  var values = color.replace(/(rgba?|[()]+|\s+)/g, "").split(",");
+  var r = parseInt(values[0]) || 0;
+  var g = parseInt(values[1]) || 0;
+  var b = parseInt(values[2]) || 0;
+  return ((r << 16) + (g << 8) + b).toString(16).padStart(6, "0");
+}
+/**
+ * hex转rgba
+ * @param {String} color
+ * @param {Float} alp
+ */
+
+function hexToRgba(color, alp) {
+  var tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+  if (!tmp) return "";
+  var r = parseInt(tmp[1], 16);
+  var g = parseInt(tmp[2], 16);
+  var b = parseInt(tmp[3], 16);
+  var a = alp;
+  return "rgba(".concat(r, ",").concat(g, ",").concat(b, ",").concat(a, ")");
+}
+/**
+ * rgba转rgb
+ * @param {String} color
+ */
+
+function rgbaToRgb(color) {
+  var values = color.replace(/(rgba?|[()]+|\s+)/g, "").split(",");
+  var a = parseFloat(values[3]) || 1;
+  var r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255);
+  var g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255);
+  var b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255);
+  var rr = "0" + r.toString(16).slice(-2);
+  var gg = "0" + g.toString(16).slice(-2);
+  var bb = "0" + b.toString(16).slice(-2);
+  return "#".concat(rr).concat(gg).concat(bb);
+}
+/**
+ * base64编码，兼容中文
+ *
+ * @param str
+ * @returns
+ */
+
+function encode(str) {
+  return base64__default['default'].btoa(window.encodeURIComponent(str));
+}
+/**
+ * base64解码，兼容中文
+ *
+ * @param str
+ * @returns
+ */
+
+function decode(str) {
+  return window.decodeURIComponent(base64__default['default'].atob(str));
+}
+/**
+ * 序列化，可以处理Set、Map、Function
+ * @param obj
+ * @param spaces
+ * @returns
+ */
+
+function stringify(obj) {
+  var spaces = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  return JSON.stringify(obj, function (key, val) {
+    if (_typeof(val) === "symbol") {
+      return val.toString();
+    }
+
+    if (val instanceof Set) {
+      return Array.from(val);
+    }
+
+    if (val instanceof Map) {
+      return Array.from(val.entries());
+    }
+
+    if (typeof val === "function") {
+      return val.toString();
+    }
+
+    return val;
+  }, spaces);
+}
+
+var string = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  makeRandom: makeRandom,
+  camelCase: camelCase,
+  upperFirst: upperFirst,
+  rgbToHex: rgbToHex,
+  hexToRgba: hexToRgba,
+  rgbaToRgb: rgbaToRgb,
+  encode: encode,
+  decode: decode,
+  stringify: stringify
+});
+
+/**
+ * URL参数解析
+ * @param url
+ * parseURLParameters("http://url.com/page?age=123&sname=ddd"); // {age: "123", name: "ddd"}
+ */
+function parseURLParameters(url) {
+  return (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(function (a, v) {
+    return a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1), a;
+  }, {});
+}
 var isObject = function isObject(val) {
   return getObjectType(val);
 };
@@ -388,36 +428,6 @@ function lastItem(list) {
     return Array.from(list.values()).slice(-1)[0];
   }
 }
-/**
- * 序列化，可以处理Set、Map、Function
- */
-
-var stringify = function () {
-  var replacer = function replacer(key, val) {
-    if (_typeof(val) === "symbol") {
-      return val.toString();
-    }
-
-    if (val instanceof Set) {
-      return Array.from(val);
-    }
-
-    if (val instanceof Map) {
-      return Array.from(val.entries());
-    }
-
-    if (typeof val === "function") {
-      return val.toString();
-    }
-
-    return val;
-  };
-
-  return function (obj) {
-    var spaces = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    return JSON.stringify(obj, replacer, spaces);
-  };
-}();
 /**
  * 顺序执行Promise队列
  */
@@ -613,21 +623,107 @@ function makeTree(data) {
     return item;
   });
 }
+/**
+ * 通过a标签下载文件
+ * @param url
+ * @returns
+ */
 
-var Tool = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    isObject: isObject,
-    getObjectType: getObjectType,
-    deepClone: deepClone,
-    getCookie: getCookie,
-    throttle: throttle,
-    debounce: debounce,
-    lastItem: lastItem,
-    stringify: stringify,
-    asyncSequentializer: asyncSequentializer,
-    poll: poll,
-    findFirstLeafNode: findFirstLeafNode,
-    makeTree: makeTree
+function downFileByUrl(url) {
+  if (!url) return;
+  var fileName = url.slice(url.lastIndexOf("/") + 1, url.length);
+  var tempLink = document.createElement("a");
+  tempLink.style.display = "none";
+  tempLink.href = url;
+  tempLink.setAttribute("download", decodeURI(fileName)); // 兼容：某些浏览器不支持HTML5的download属性
+
+  if (typeof tempLink.download === "undefined") {
+    tempLink.setAttribute("target", "_blank");
+  }
+
+  document.body.appendChild(tempLink);
+  tempLink.click();
+  document.body.removeChild(tempLink);
+}
+/**
+ * 将Blob数据以文件形式下载
+ * @param binary 待转换的二进制数据
+ * @param filename 待下载的文件名 res.headers['content-disposition'].match(/filename=(.*)/)[1];
+ * @param type MIME 类型 res.headers['content-type']
+ */
+
+function downFileByBlob(binary) {
+  var filename = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "unknown";
+  var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "application/octet-stream";
+  // 将二进制流转为blob
+  var blob = new Blob([binary], {
+    type: type
+  });
+
+  if (typeof window.navigator.msSaveBlob !== "undefined") {
+    // 兼容IE，window.navigator.msSaveBlob：以本地方式保存文件
+    window.navigator.msSaveBlob(blob, decodeURI(filename));
+  } else {
+    // 创建新的URL并指向File对象或者Blob对象的地址
+    var blobURL = window.URL.createObjectURL(blob);
+    var tempLink = document.createElement("a");
+    tempLink.style.display = "none";
+    tempLink.href = blobURL;
+    tempLink.setAttribute("download", decodeURI(filename)); // 兼容：某些浏览器不支持HTML5的download属性
+
+    if (typeof tempLink.download === "undefined") {
+      tempLink.setAttribute("target", "_blank");
+    }
+
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
+    window.URL.revokeObjectURL(blobURL);
+  }
+}
+/**
+ * 将字符串拷贝到粘贴板
+ * @param str
+ * @returns
+ */
+
+function copyToClipboard(str) {
+  var el = document.createElement("textarea");
+  el.value = str;
+  el.setAttribute("readonly", "readonly");
+  el.style.position = "absolute";
+  el.style.left = "-9999px";
+  document.body.appendChild(el);
+  var selection = window.getSelection();
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+  if (!selection) return;
+  var selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+
+  if (selected) {
+    selection.removeAllRanges();
+    selection.addRange(selected);
+  }
+}
+
+var lib = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  parseURLParameters: parseURLParameters,
+  isObject: isObject,
+  getObjectType: getObjectType,
+  deepClone: deepClone,
+  getCookie: getCookie,
+  throttle: throttle,
+  debounce: debounce,
+  lastItem: lastItem,
+  asyncSequentializer: asyncSequentializer,
+  poll: poll,
+  findFirstLeafNode: findFirstLeafNode,
+  makeTree: makeTree,
+  downFileByUrl: downFileByUrl,
+  downFileByBlob: downFileByBlob,
+  copyToClipboard: copyToClipboard
 });
 
 /**
@@ -636,17 +732,6 @@ var Tool = /*#__PURE__*/Object.freeze({
 
 function getDeviceType() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
-}
-/**
- * URL参数解析
- * @param url
- * parseURLParameters("http://url.com/page?age=123&sname=ddd"); // {age: "123", name: "ddd"}
- */
-
-function parseURLParameters(url) {
-  return (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(function (a, v) {
-    return a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1), a;
-  }, {});
 }
 
 var trim = function trim(s) {
@@ -1110,117 +1195,48 @@ function getTotalScrollOffsetRoot(element) {
     height: height
   };
 }
+
+var dom = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  getDeviceType: getDeviceType,
+  on: on,
+  off: off,
+  once: once,
+  hasClass: hasClass,
+  addClass: addClass,
+  removeClass: removeClass,
+  getStyle: getStyle,
+  setStyle: setStyle,
+  removeStyle: removeStyle,
+  isScroll: isScroll,
+  getScrollContainer: getScrollContainer,
+  isInContainer: isInContainer,
+  getOffsetTop: getOffsetTop,
+  getOffsetTopDistance: getOffsetTopDistance,
+  getElementOffsetRoot: getElementOffsetRoot,
+  triggerEvent: triggerEvent,
+  lookupParentNodeByClassName: lookupParentNodeByClassName,
+  clickProxy: clickProxy,
+  elementIsVisibleInViewport: elementIsVisibleInViewport,
+  isScrollBottom: isScrollBottom,
+  getViewport: getViewport,
+  getTotalScrollOffsetRoot: getTotalScrollOffsetRoot
+});
+
 /**
- * 将字符串拷贝到粘贴板
- * @param str
- * @returns
+ * IP地址
+ */
+var REGEXP_IP = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/;
+/**
+ * 字符串
  */
 
-function copyToClipboard(str) {
-  var el = document.createElement("textarea");
-  el.value = str;
-  el.setAttribute("readonly", "readonly");
-  el.style.position = "absolute";
-  el.style.left = "-9999px";
-  document.body.appendChild(el);
-  var selection = window.getSelection();
-  el.select();
-  document.execCommand("copy");
-  document.body.removeChild(el);
-  if (!selection) return;
-  var selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+var REGEXP_STRING = /^[a-zA-Z0-9-_:：（）\(\)\u4e00-\u9fa5]{1,30}$/;
 
-  if (selected) {
-    selection.removeAllRanges();
-    selection.addRange(selected);
-  }
-}
-/**
- * 通过a标签下载文件
- * @param url
- * @returns
- */
-
-function downFileByUrl(url) {
-  if (!url) return;
-  var fileName = url.slice(url.lastIndexOf("/") + 1, url.length);
-  var tempLink = document.createElement("a");
-  tempLink.style.display = "none";
-  tempLink.href = url;
-  tempLink.setAttribute("download", decodeURI(fileName)); // 兼容：某些浏览器不支持HTML5的download属性
-
-  if (typeof tempLink.download === "undefined") {
-    tempLink.setAttribute("target", "_blank");
-  }
-
-  document.body.appendChild(tempLink);
-  tempLink.click();
-  document.body.removeChild(tempLink);
-}
-/**
- * 将Blob数据一文件形式下载
- * @param binary 待转换的二进制数据
- * @param filename 待下载的文件名 res.headers['content-disposition'].match(/filename=(.*)/)[1];
- * @param type MIME 类型 res.headers['content-type']
- */
-
-function convertRes2Blob(binary, filename, type) {
-  // 将二进制流转为blob
-  var blob = new Blob([binary], {
-    type: type
-  });
-
-  if (typeof window.navigator.msSaveBlob !== "undefined") {
-    // 兼容IE，window.navigator.msSaveBlob：以本地方式保存文件
-    window.navigator.msSaveBlob(blob, decodeURI(filename));
-  } else {
-    // 创建新的URL并指向File对象或者Blob对象的地址
-    var blobURL = window.URL.createObjectURL(blob);
-    var tempLink = document.createElement("a");
-    tempLink.style.display = "none";
-    tempLink.href = blobURL;
-    tempLink.setAttribute("download", decodeURI(filename)); // 兼容：某些浏览器不支持HTML5的download属性
-
-    if (typeof tempLink.download === "undefined") {
-      tempLink.setAttribute("target", "_blank");
-    }
-
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
-    window.URL.revokeObjectURL(blobURL);
-  }
-}
-
-var DomUtil = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    getDeviceType: getDeviceType,
-    parseURLParameters: parseURLParameters,
-    on: on,
-    off: off,
-    once: once,
-    hasClass: hasClass,
-    addClass: addClass,
-    removeClass: removeClass,
-    getStyle: getStyle,
-    setStyle: setStyle,
-    removeStyle: removeStyle,
-    isScroll: isScroll,
-    getScrollContainer: getScrollContainer,
-    isInContainer: isInContainer,
-    getOffsetTop: getOffsetTop,
-    getOffsetTopDistance: getOffsetTopDistance,
-    getElementOffsetRoot: getElementOffsetRoot,
-    triggerEvent: triggerEvent,
-    lookupParentNodeByClassName: lookupParentNodeByClassName,
-    clickProxy: clickProxy,
-    elementIsVisibleInViewport: elementIsVisibleInViewport,
-    isScrollBottom: isScrollBottom,
-    getViewport: getViewport,
-    getTotalScrollOffsetRoot: getTotalScrollOffsetRoot,
-    copyToClipboard: copyToClipboard,
-    downFileByUrl: downFileByUrl,
-    convertRes2Blob: convertRes2Blob
+var reg = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  REGEXP_IP: REGEXP_IP,
+  REGEXP_STRING: REGEXP_STRING
 });
 
 /**
@@ -1316,10 +1332,10 @@ function formatTime(time, option) {
   return parseTime(time, option);
 }
 
-var TimeUtil = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    parseTime: parseTime,
-    formatTime: formatTime
+var time = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  parseTime: parseTime,
+  formatTime: formatTime
 });
 
 // 全局事件车
@@ -1382,32 +1398,16 @@ function destoryAllBus() {
   ENVENT_BUS_INSTANCES.clear();
 }
 
-var EventBus = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    getBus: getBus,
-    destoryAllBus: destoryAllBus
+var eventBus = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  getBus: getBus,
+  destoryAllBus: destoryAllBus
 });
 
-/**
- * IP地址
- */
-var REGEXP_IP = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/;
-/**
- * 字符串
- */
-
-var REGEXP_STRING = /^[a-zA-Z0-9-_:：（）\(\)\u4e00-\u9fa5]{1,30}$/;
-
-var RegUtil = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    REGEXP_IP: REGEXP_IP,
-    REGEXP_STRING: REGEXP_STRING
-});
-
-exports.DomUtil = DomUtil;
-exports.EventBus = EventBus;
-exports.RegUtil = RegUtil;
-exports.StringUtil = StringUtil;
-exports.TimeUtil = TimeUtil;
-exports.Tool = Tool;
+exports.dom = dom;
+exports.event = eventBus;
+exports.lib = lib;
+exports.reg = reg;
+exports.string = string;
+exports.time = time;
 //# sourceMappingURL=weblibext.cjs.js.map

@@ -99,3 +99,31 @@ export function encode(str: string) {
 export function decode(str: string) {
   return window.decodeURIComponent(base64.atob(str));
 }
+
+/**
+ * 序列化，可以处理Set、Map、Function
+ * @param obj
+ * @param spaces
+ * @returns
+ */
+export function stringify(obj: any, spaces = 0) {
+  return JSON.stringify(
+    obj,
+    (key: any, val: any) => {
+      if (typeof val === "symbol") {
+        return val.toString();
+      }
+      if (val instanceof Set) {
+        return Array.from(val);
+      }
+      if (val instanceof Map) {
+        return Array.from(val.entries());
+      }
+      if (typeof val === "function") {
+        return val.toString();
+      }
+      return val;
+    },
+    spaces
+  );
+}

@@ -1,6 +1,6 @@
 import { PlainObject } from "@type/index";
-import { camelCase } from "./StringUtil";
-import { isObject } from "./Tool";
+import { camelCase } from "./string";
+import { isObject } from "./lib";
 
 /**
  * 设备类型获取
@@ -11,20 +11,6 @@ export function getDeviceType() {
   )
     ? "Mobile"
     : "Desktop";
-}
-
-/**
- * URL参数解析
- * @param url
- * parseURLParameters("http://url.com/page?age=123&sname=ddd"); // {age: "123", name: "ddd"}
- */
-export function parseURLParameters(url: string) {
-  return (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
-    (a: PlainObject, v) => (
-      (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
-    ),
-    {}
-  );
 }
 
 const trim = function (s: string) {
@@ -524,88 +510,4 @@ export function getTotalScrollOffsetRoot(element: any) {
   }
 
   return { width: width, height: height };
-}
-
-/**
- * 将字符串拷贝到粘贴板
- * @param str
- * @returns
- */
-export function copyToClipboard(str: string) {
-  const el = document.createElement("textarea");
-  el.value = str;
-  el.setAttribute("readonly", "readonly");
-  el.style.position = "absolute";
-  el.style.left = "-9999px";
-  document.body.appendChild(el);
-
-  const selection = window.getSelection();
-
-  el.select();
-  document.execCommand("copy");
-  document.body.removeChild(el);
-
-  if (!selection) return;
-
-  const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
-  if (selected) {
-    selection.removeAllRanges();
-    selection.addRange(selected);
-  }
-}
-
-/**
- * 通过a标签下载文件
- * @param url
- * @returns
- */
-export function downFileByUrl(url: string) {
-  if (!url) return;
-
-  const fileName = url.slice(url.lastIndexOf("/") + 1, url.length);
-
-  const tempLink = document.createElement("a");
-  tempLink.style.display = "none";
-  tempLink.href = url;
-  tempLink.setAttribute("download", decodeURI(fileName)); // 兼容：某些浏览器不支持HTML5的download属性
-
-  if (typeof tempLink.download === "undefined") {
-    tempLink.setAttribute("target", "_blank");
-  }
-
-  document.body.appendChild(tempLink);
-  tempLink.click();
-  document.body.removeChild(tempLink);
-}
-
-/**
- * 将Blob数据一文件形式下载
- * @param binary 待转换的二进制数据
- * @param filename 待下载的文件名 res.headers['content-disposition'].match(/filename=(.*)/)[1];
- * @param type MIME 类型 res.headers['content-type']
- */
-export function convertRes2Blob(binary: any, filename: string, type: string) {
-  // 将二进制流转为blob
-  const blob = new Blob([binary], { type });
-  if (typeof window.navigator.msSaveBlob !== "undefined") {
-    // 兼容IE，window.navigator.msSaveBlob：以本地方式保存文件
-    window.navigator.msSaveBlob(blob, decodeURI(filename));
-  } else {
-    // 创建新的URL并指向File对象或者Blob对象的地址
-    const blobURL = window.URL.createObjectURL(blob);
-
-    const tempLink = document.createElement("a");
-    tempLink.style.display = "none";
-    tempLink.href = blobURL;
-    tempLink.setAttribute("download", decodeURI(filename)); // 兼容：某些浏览器不支持HTML5的download属性
-
-    if (typeof tempLink.download === "undefined") {
-      tempLink.setAttribute("target", "_blank");
-    }
-
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
-    window.URL.revokeObjectURL(blobURL);
-  }
 }

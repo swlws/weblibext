@@ -4,18 +4,11 @@ export type PlainObject = Record<string, any>;
 /**
  * DOM操作
  */
-declare interface domUtil {
+declare interface Dom {
   /**
    * 设备类型获取
    */
   getDeviceType: () => "Mobile" | "Desktop";
-
-  /**
-   * URL参数解析
-   * @param url
-   * parseURLParameters("http://url.com/page?age=123&sname=ddd"); // {age: "123", name: "ddd"}
-   */
-  parseURLParameters: (url: string) => PlainObject;
 
   /**
    * 注册事件
@@ -247,30 +240,12 @@ declare interface domUtil {
     width: number;
     height: number;
   };
-
-  /**
-   * 将字符串拷贝到粘贴板
-   * @param str
-   * @returns
-   */
-  copyToClipboard: (str: string) => void;
-
-  /**
-   * 通过a标签下载文件
-   * @param url
-   * @returns
-   */
-  downFileByUrl: (url: string) => void;
-
-  /**
-   * 将Blob数据一文件形式下载
-   * @param binary 待转换的二进制数据
-   * @param filename 待下载的文件名 res.headers['content-disposition'].match(/filename=(.*)/)[1];
-   * @param type MIME 类型 res.headers['content-type']
-   */
-  convertRes2Blob: (binary: any, filename: string, type: string) => void;
 }
-export const DomUtil: domUtil;
+
+/**
+ * 常用DOM操作扩展
+ */
+export const dom: Dom;
 
 import { Handler, EventType, Emitter, WildcardHandler } from "mitt";
 type CustomEmitter = Emitter & {
@@ -281,7 +256,7 @@ type CustomEmitter = Emitter & {
 /**
  * 事件车
  */
-declare interface eventBus {
+declare interface EventBus {
   /**
    * 获取事件车实例
    *
@@ -295,12 +270,15 @@ declare interface eventBus {
    */
   destoryAllBus: () => void;
 }
-export const EventBus: eventBus;
+/**
+ * 事件车
+ */
+export const event: EventBus;
 
 /**
  * 正则表达式
  */
-declare interface regUtil {
+declare interface Reg {
   /**
    * IP地址
    */
@@ -311,14 +289,18 @@ declare interface regUtil {
    */
   REGEXP_STRING: RegExp;
 }
-export const RegUtil: regUtil;
+
+/**
+ * 常用正则表达式
+ */
+export const reg: Reg;
 
 /**
  * 字符串操作
  */
-declare interface stringUtil {
+declare interface String {
   /**
-   * 生成随机数
+   * 生成随机字符串
    */
   makeRandom: () => string;
 
@@ -369,13 +351,22 @@ declare interface stringUtil {
    * @returns
    */
   decode: (str: string) => string;
+
+  /**
+   * 序列化，支持Map、Set、Function
+   */
+  stringify: (obj: any, spaces = 0) => string;
 }
-export const StringUtil: stringUtil;
+
+/**
+ * 常用字符串操作
+ */
+export const string: String;
 
 /**
  * 时间操作
  */
-declare interface timeUtil {
+declare interface Time {
   /**
    * 解析时间
    *
@@ -394,7 +385,10 @@ declare interface timeUtil {
    */
   formatTime: (time: Date | string | number, option?: string) => string | null;
 }
-export const TimeUtil: timeUtil;
+/**
+ * 常用时间操作
+ */
+export const time: Time;
 
 /**
  * 数据类型枚举
@@ -410,7 +404,14 @@ type ObjectTypeEnum =
 /**
  * 工具方法
  */
-declare interface tool {
+declare interface Lib {
+  /**
+   * URL参数解析
+   * @param url
+   * parseURLParameters("http://url.com/page?age=123&sname=ddd"); // {age: "123", name: "ddd"}
+   */
+  parseURLParameters: (url: string) => PlainObject;
+
   /**
    * 获取数据类型
    *
@@ -443,8 +444,7 @@ declare interface tool {
   throttle: (fn: any, wait?: number, that?: any) => (...rest: any[]) => void;
 
   /**
-   * 函数防抖
-   * 连续触发N次，仅在最后一次执行
+   * 函数防抖，连续触发N次，仅在最后一次执行
    *
    * @param fn
    * @param wait
@@ -483,5 +483,36 @@ declare interface tool {
     data: PlainObject[],
     config?: { id: string; pid: string }
   ) => PlainObject[];
+
+  /**
+   * 通过URL下载文件
+   * @param url
+   * @returns
+   */
+  downFileByUrl: (url: string) => void;
+
+  /**
+   * 将Blob数据以文件格式下载
+   *
+   * @param binary 待转换的二进制数据
+   * @param filename 待下载的文件名 res.headers['content-disposition'].match(/filename=(.*)/)[1];
+   * @param type MIME 类型 res.headers['content-type']
+   */
+  downFileByBlob: (
+    binary: any,
+    filename = "unknown",
+    type = "application/octet-stream"
+  ) => void;
+
+  /**
+   * 将字符串拷贝到粘贴板
+   * @param str
+   * @returns
+   */
+  copyToClipboard: (str: string) => void;
 }
-export const Tool: tool;
+
+/**
+ * 常用的工具方法
+ */
+export const lib: Lib;
